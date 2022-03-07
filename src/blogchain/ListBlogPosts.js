@@ -1,6 +1,8 @@
 import { useSubstrateState } from '../substrate-lib'
 import { Grid, Button, Modal } from 'semantic-ui-react'
 import { useEffect, useState } from 'react'
+import CreateComment from './CreateComment'
+import Tip from './Tip'
 
 function ListBlogPosts() {
   const { api, keyring } = useSubstrateState()
@@ -30,7 +32,6 @@ function ListBlogPosts() {
         }
       }, {})
       setBlogPostComments(c)
-      console.log(commentsMap, c)
     })
 
   }, [api, keyring])
@@ -72,15 +73,22 @@ function BlogPostModal(props) {
         <Button>Detail</Button>
       }
     >
-      TODO: show author
-      https://github.com/substrate-developer-hub/substrate-front-end-template/blob/tutorials/solutions/kitties/src/KittyCards.js
-      TODO: show content
-      TODO: show post comment form with blogPostId as value and input for content
-      TODO: show tip form with blogPostId as value and input for amount
-      {comments && comments.map((comment) => {
-        return <div key={comment.content}>{comment.content}</div>
-      })}
-      Hello!! {post.id}
+      <Modal.Header>Post ID: {post.id}</Modal.Header>
+      <Modal.Content>
+        <b>Author:</b> {post.author} <br />
+        <b>Content:</b> {post.content}
+      </Modal.Content>
+      <Modal.Content>
+        <h3>Comments:</h3>
+        <ul>
+          {comments && comments.map((comment) => {
+            return <li key={comment.content}>{comment.author} wrote: <br />{comment.content}</li>
+          })}
+        </ul>
+
+        <CreateComment postId={post.id} />
+        <Tip postId={post.id} />
+      </Modal.Content>
     </Modal>
 
   )
