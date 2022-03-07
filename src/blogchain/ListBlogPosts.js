@@ -5,7 +5,7 @@ import CreateComment from './CreateComment'
 import Tip from './Tip'
 
 function ListBlogPosts() {
-  const { api, keyring } = useSubstrateState()
+  const { api } = useSubstrateState()
   const [ blogPosts, setBlogPosts ] = useState([])
   const [ blogPostComments, setBlogPostComments ] = useState({})
 
@@ -21,7 +21,7 @@ function ListBlogPosts() {
       setBlogPosts(p)
     })
 
-  }, [api, keyring])
+  }, [api])
 
   useEffect(() => {
     api.query.blogchain.blogPostComments.entries().then((commentsMap) => {
@@ -34,7 +34,7 @@ function ListBlogPosts() {
       setBlogPostComments(c)
     })
 
-  }, [api, keyring])
+  }, [api])
 
   return (
       <Grid.Column width={8}>
